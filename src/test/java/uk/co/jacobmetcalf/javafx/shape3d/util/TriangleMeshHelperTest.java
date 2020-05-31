@@ -1,6 +1,5 @@
 package uk.co.jacobmetcalf.javafx.shape3d.util;
 
-import co.unruly.matchers.StreamMatchers;
 import java.util.stream.IntStream;
 import javafx.scene.shape.TriangleMesh;
 import org.hamcrest.MatcherAssert;
@@ -14,8 +13,8 @@ class TriangleMeshHelperTest {
   @Test
   public void can_reverse() {
     IntStream input = IntStream.of(EXAMPLE);
-    MatcherAssert.assertThat( TriangleMeshHelper.addReverseFace(input),
-        StreamMatchers.startsWithInt(1, 10, 2, 20, 3, 30,
+    Integer[] actual = TriangleMeshHelper.addReverseFace(input).boxed().toArray(Integer[]::new);
+    MatcherAssert.assertThat(actual, Matchers.arrayContaining(1, 10, 2, 20, 3, 30,
             3, 30, 2, 20, 1, 10));
   }
 

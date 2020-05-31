@@ -9,8 +9,8 @@
   <version>1.0-SNAPSHOT</version>
 
   <properties>
-    <maven.compiler.source>1.14</maven.compiler.source>
-    <maven.compiler.target>1.14</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jdk.version>14</jdk.version>
     <javafx.version>14</javafx.version>
     <junit5.version>5.6.2</junit5.version>
   </properties>
@@ -42,21 +42,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.6.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-junit-jupiter</artifactId>
       <version>3.3.3</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>co.unruly</groupId>
-      <artifactId>java-8-matchers</artifactId>
-      <version>1.6</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -66,4 +54,48 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <!-- Add the repository to download the "SNAPSHOT" of maven-surefire-plugin -->
+  <pluginRepositories>
+    <pluginRepository>
+      <id>apache.snapshots</id>
+      <url>https://repository.apache.org/snapshots/</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.1</version>
+          <configuration>
+            <source>${jdk.version}</source>
+            <target>${jdk.version}</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.4</version>
+      </plugin>
+      <!-- Versions of surefire which have junit 5 support, but also fix class incompatbility issue-->
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+      </plugin>
+    </plugins>
+  </build>
 </project>
