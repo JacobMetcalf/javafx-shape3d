@@ -6,7 +6,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
-class TriangleMeshHelperTest {
+public class TriangleMeshHelperTest {
 
   private static final int[] EXAMPLE = {1, 10, 2, 20, 3, 30};
 

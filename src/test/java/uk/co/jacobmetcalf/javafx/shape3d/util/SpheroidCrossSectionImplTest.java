@@ -11,13 +11,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import uk.co.jacobmetcalf.javafx.shape3d.Spheroid;
 
 @ExtendWith(MockitoExtension.class)
-class SpheroidCrossSectionImplTest {
+public class SpheroidCrossSectionImplTest {
 
   @Mock
   public EllipticalToCartesianConverter mockConverter;
 
   @Test
-  void cross_section_creates_correct_points() {
+  public void cross_section_creates_correct_points() {
     SpheroidCrossSection pole = new SpheroidCrossSection(0,0, null, mockConverter);
     SpheroidCrossSection unit = new SpheroidCrossSection(30, 1, pole, mockConverter);
 

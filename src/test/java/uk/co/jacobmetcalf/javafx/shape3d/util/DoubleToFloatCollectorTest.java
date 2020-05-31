@@ -4,10 +4,10 @@ import java.util.stream.DoubleStream;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class DoubleToFloatCollectorTest {
+public class DoubleToFloatCollectorTest {
 
   @Test
-  void can_convert_to_float_array() {
+  public void can_convert_to_float_array() {
 
     float[] actual = DoubleStream.of(0.5, 1.0, 1.5)
         .collect( DoubleToFloatCollector::supplier,
