@@ -4,7 +4,6 @@ import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import uk.co.jacobmetcalf.javafx.shape3d.Spheroid;
 
 public class SpheroidCrossSection {
 
@@ -13,6 +12,7 @@ public class SpheroidCrossSection {
   public static final int BOTTOM_LEFT_TEX = 2;
   public static final int BOTTOM_RIGHT_TEX = 3;
   private final double theta;
+  private final int divisions;
   private final int pointNumberOffset;
   private final SpheroidCrossSection previous;
   private final EllipticalToCartesianConverter converter;
@@ -20,19 +20,21 @@ public class SpheroidCrossSection {
   /**
    * @param theta             (polar) angle from the y axis
    * @param pointNumberOffset Where to start numbering the points from for javaFX
+   * @param divisions         The number of segments the circle is divided into.
    * @param previous          The previous cross section, leave null for the first pole.
    */
-  public SpheroidCrossSection(double theta, int pointNumberOffset,
+  public SpheroidCrossSection(double theta, int pointNumberOffset, int divisions,
       @Nullable final SpheroidCrossSection previous,
-      @NonNull final EllipticalToCartesianConverter plotter) {
+      @NonNull final EllipticalToCartesianConverter converter) {
 
     assert theta >= 0 : "Theta must be positive";
     assert theta <= 180 : "Theta must be less than 180";
 
     this.theta = theta;
     this.pointNumberOffset = pointNumberOffset;
+    this.divisions = divisions;
     this.previous = previous;
-    this.converter = plotter;
+    this.converter = converter;
   }
 
   /**
@@ -46,7 +48,8 @@ public class SpheroidCrossSection {
       return converter.toCartesian(theta, 0);
     }
     // Else rotate all the way around the circle in divisions
-    return DoubleStream.iterate(0, phi -> phi < 360, phi -> phi + Spheroid.DIV_DEGREES)
+    return DoubleStream.iterate(0, phi -> phi < 360,
+        phi -> phi + 360d / divisions)
         .flatMap(phi -> converter.toCartesian(theta, phi));
   }
 
@@ -60,7 +63,7 @@ public class SpheroidCrossSection {
     }
 
     // Modulo to make it easier for the last face to connect points N back to 0
-    return divisionNumber % Spheroid.DIVISIONS + pointNumberOffset;
+    return divisionNumber % divisions + pointNumberOffset;
   }
 
   /**
@@ -73,7 +76,7 @@ public class SpheroidCrossSection {
       return IntStream.empty();
     }
 
-    return IntStream.range(0, Spheroid.DIVISIONS)
+    return IntStream.range(0, divisions)
         .flatMap(this::toTexCoord);
   }
 

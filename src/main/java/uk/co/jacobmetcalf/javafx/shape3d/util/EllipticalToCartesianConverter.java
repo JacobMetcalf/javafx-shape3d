@@ -12,6 +12,7 @@ public class EllipticalToCartesianConverter {
   private final double horizontalRadius;
 
   public EllipticalToCartesianConverter(double horizontalRadius, double verticalRadius) {
+    assert (horizontalRadius >= 0 && verticalRadius >= 0) : "Radii must be positive";
     this.verticalRadius = verticalRadius;
     this.horizontalRadius = horizontalRadius;
   }
