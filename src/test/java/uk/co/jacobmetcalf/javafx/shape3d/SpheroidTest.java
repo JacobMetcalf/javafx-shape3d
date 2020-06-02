@@ -9,7 +9,7 @@ public class SpheroidTest {
 
   static final int TEST_DIVISIONS = 6;
   @Test
-  void build_spheroid() {
+  public void build_spheroid() {
     Spheroid unit = Spheroid.build(100, 200, TEST_DIVISIONS);
     assert_spheroid_mesh(unit, TEST_DIVISIONS);
 
@@ -18,7 +18,7 @@ public class SpheroidTest {
   }
 
   @Test
-  void build_hemispheroid() {
+  public void build_hemispheroid() {
     Spheroid unit = Spheroid.buildHemispheroid(100, 200, TEST_DIVISIONS);
     assert_hemisphere_mesh(unit, TEST_DIVISIONS);
 

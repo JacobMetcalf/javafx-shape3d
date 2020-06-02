@@ -6,7 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.transform.Translate;
 
 /**
- * 3D layout container which places objects relative to the objects already in the stack.
+ * 3D layout container which aligns objects relative to the objects already in the stack.
+ * Example placing one object above another: <pre>
+ *  Group group = new Stack3D()
+ *      .add(firstNode)
+ *      .add(secondNode, PlacementX.ALIGN_CENTRE, PlacementY.ABOVE, PlacementZ.ALIGN_CENTRE)
+ *      .toGroup();
+ * </pre>
  */
 public class Stack3D {
 
@@ -44,8 +50,8 @@ public class Stack3D {
    * Convenience method for adding the first node.
    */
   public Stack3D add(final Node child) {
-      return add(child, PlacementX.ALIGN_CENTRE, PlacementY.ALIGN_CENTRE,
-          PlacementZ.ALIGN_CENTRE);
+    stack.getChildren().add(child);
+    return this;
   }
 
   /**
