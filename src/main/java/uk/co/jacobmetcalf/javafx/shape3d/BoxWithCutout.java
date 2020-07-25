@@ -2,8 +2,7 @@ package uk.co.jacobmetcalf.javafx.shape3d;
 
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
-import uk.co.jacobmetcalf.javafx.shape3d.util.CuboidMeshBuilder;
-import uk.co.jacobmetcalf.javafx.shape3d.util.CuboidMeshBuilder.FillFaces;
+import uk.co.jacobmetcalf.javafx.shape3d.CuboidMeshBuilder.Cuboid.FillFaces;
 
 /**
  * A box with a rectangular cut out
@@ -54,6 +53,6 @@ public class BoxWithCutout extends MeshView {
         .addBottomFace(FillFaces.EXTERIOR)
         .addRightFace(FillFaces.EXTERIOR);
 
-    this.setMesh(builder.toMesh());
+    this.setMesh(builder.build());
   }
 }

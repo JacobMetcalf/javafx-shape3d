@@ -1,12 +1,11 @@
 package uk.co.jacobmetcalf.javafx.shape3d.util;
 
+import java.util.Objects;
 import java.util.stream.IntStream;
-import javafx.geometry.Point3D;
-import uk.co.jacobmetcalf.javafx.shape3d.util.CuboidMeshBuilder.FillFaces;
+import uk.co.jacobmetcalf.javafx.shape3d.CuboidMeshBuilder.Cuboid.FillFaces;
 
 /**
- * Encapsulates the face of a cuboid, managing the translation to TexCoords
- * and the creation of a Triangular Mesh array.
+ * Encapsulates the face of a cuboid and describing it in a Triangular Mesh array.
  */
 public class CuboidFace {
 
@@ -20,19 +19,17 @@ public class CuboidFace {
   private final int bottomRightTex;
   private FillFaces fillFaces;
 
-  public enum Plane {XY, XZ, YZ}
-
   public CuboidFace(int topLeft, int topRight, int bottomLeft, int bottomRight,
-      final FillFaces fillFaces, final Plane plane,
-      final NumberedPointSet pointSet, final NumberedTexCoordSet texCoordSet) {
+      int topLeftTex, int topRightTex, int bottomLeftTex, int bottomRightTex,
+      final FillFaces fillFaces) {
     this.topLeft = topLeft;
-    this.topLeftTex = addTexCoord(topLeft, plane, pointSet, texCoordSet);
+    this.topLeftTex = topLeftTex;
     this.topRight = topRight;
-    this.topRightTex = addTexCoord(topRight, plane, pointSet, texCoordSet);
+    this.topRightTex = topRightTex;
     this.bottomLeft = bottomLeft;
-    this.bottomLeftTex = addTexCoord(bottomLeft, plane, pointSet, texCoordSet);
+    this.bottomLeftTex = bottomLeftTex;
     this.bottomRight = bottomRight;
-    this.bottomRightTex = addTexCoord(bottomRight, plane, pointSet, texCoordSet);
+    this.bottomRightTex = bottomRightTex;
     this.fillFaces = fillFaces;
   }
 
@@ -65,17 +62,45 @@ public class CuboidFace {
     return FillFaces.BOTH.equals(fillFaces) ? IntStream.of(0, 0, 0, 0) : IntStream.of(0, 0);
   }
 
-  /**
-   * Transpose the position in the plane to a coordinate on the XY plane
-   */
-  private int addTexCoord(int pointIndex, final Plane plane,
-      final NumberedPointSet pointSet, final NumberedTexCoordSet texCoordSet) {
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    CuboidFace that = (CuboidFace) o;
+    return topLeft == that.topLeft &&
+        topLeftTex == that.topLeftTex &&
+        topRight == that.topRight &&
+        topRightTex == that.topRightTex &&
+        bottomLeft == that.bottomLeft &&
+        bottomLeftTex == that.bottomLeftTex &&
+        bottomRight == that.bottomRight &&
+        bottomRightTex == that.bottomRightTex &&
+        fillFaces == that.fillFaces;
+  }
 
-    Point3D point = pointSet.get(pointIndex);
-    return switch (plane) {
-      case XY -> texCoordSet.addTexCoord(point.getX(), point.getY());
-      case XZ -> texCoordSet.addTexCoord(point.getX(), point.getZ());
-      case YZ -> texCoordSet.addTexCoord(point.getY(), point.getZ());
-    };
+  @Override
+  public int hashCode() {
+    return Objects
+        .hash(topLeft, topLeftTex, topRight, topRightTex, bottomLeft,
+            bottomLeftTex, bottomRight, bottomRightTex, fillFaces);
+  }
+
+  @Override
+  public String toString() {
+    return "CuboidFace{" +
+        "topLeft=" + topLeft +
+        ", topLeftTex=" + topLeftTex +
+        ", topRight=" + topRight +
+        ", topRightTex=" + topRightTex +
+        ", bottomLeft=" + bottomLeft +
+        ", bottomLeftTex=" + bottomLeftTex +
+        ", bottomRight=" + bottomRight +
+        ", bottomRightTex=" + bottomRightTex +
+        ", fillFaces=" + fillFaces +
+        '}';
   }
 }

@@ -2,8 +2,7 @@ package uk.co.jacobmetcalf.javafx.shape3d;
 
 import javafx.scene.shape.DrawMode;
 import javafx.scene.shape.MeshView;
-import uk.co.jacobmetcalf.javafx.shape3d.util.CuboidMeshBuilder;
-import uk.co.jacobmetcalf.javafx.shape3d.util.CuboidMeshBuilder.FillFaces;
+import uk.co.jacobmetcalf.javafx.shape3d.CuboidMeshBuilder.Cuboid.FillFaces;
 
 /**
  * An inside out box with the top removed.
@@ -20,6 +19,6 @@ public class InvertedBox extends MeshView {
         .addLeftFace(FillFaces.INTERIOR)
         .addRightFace(FillFaces.INTERIOR);
 
-    this.setMesh(builder.toMesh());
+    this.setMesh(builder.build());
   }
 }
